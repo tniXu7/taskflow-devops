@@ -1,0 +1,39 @@
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - auth-service
+      - projects-service
+    networks:
+      - taskflow-network
+
+  auth-service:
+    build: 
+      context: ./backend/auth-service
+      dockerfile: Dockerfile
+    environment:
+      - SECRET_KEY=taskflow-secret-key-2024
+      - DEBUG=True
+    networks:
+      - taskflow-network
+    deploy:
+      replicas: 2
+
+  projects-service:
+    build:
+      context: ./backend/projects-service
+      dockerfile: Dockerfile
+    environment:
+      - DEBUG=True
+    depends_on:
+      - auth-service
+    networks:
+      - taskflow-network
+    deploy:
+      replicas: 2
+
+networks:
+  taskflow-network:
+    driver: bridge
