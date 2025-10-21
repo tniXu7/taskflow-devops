@@ -1,24 +1,21 @@
-Set-Content docker-compose.yml 'version: "3.8"
-
 services:
   auth-service:
-    build: ./backend/auth-service
+    build: 
+      context: ./backend/auth-service
+      dockerfile: Dockerfile
     ports:
       - "5001:5001"
     environment:
-      - SECRET_KEY=taskflow-secret-key
+      - SECRET_KEY=taskflow-secret-key-2024
+      - DEBUG=True
 
   projects-service:
-    build: ./backend/projects-service
+    build:
+      context: ./backend/projects-service
+      dockerfile: Dockerfile
     ports:
       - "5002:5002"
     environment:
       - DEBUG=True
-
-  frontend:
-    build: ./frontend
-    ports:
-      - "3000:3000"
     depends_on:
       - auth-service
-      - projects-service'
