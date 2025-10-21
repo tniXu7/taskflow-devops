@@ -1,4 +1,4 @@
-Set-Content .github/workflows/ci-cd.yml 'name: Python CI with Pylint
+name: Python CI with Pylint
 
 on:
   pull_request:

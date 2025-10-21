@@ -1,0 +1,21 @@
+services:
+  auth-service:
+    build: 
+      context: ./backend/auth-service
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    environment:
+      - SECRET_KEY=taskflow-secret-key-2024
+      - DEBUG=True
+
+  projects-service:
+    build:
+      context: ./backend/projects-service
+      dockerfile: Dockerfile
+    ports:
+      - "5002:5002"
+    environment:
+      - DEBUG=True
+    depends_on:
+      - auth-service
