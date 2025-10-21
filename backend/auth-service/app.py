@@ -2,6 +2,15 @@ from flask import Flask, request, jsonify
 import jwt
 import datetime
 import requests
+import socket
+
+@app.route('/info')
+def service_info():
+    return jsonify({
+        'service': 'auth-service',
+        'hostname': socket.gethostname(),
+        'status': 'healthy'
+    }) 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'taskflow-secret-key-2024'
